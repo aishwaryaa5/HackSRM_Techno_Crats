@@ -1,0 +1,431 @@
+import sys.argsv
+import numpy as np
+import pandas as pd
+
+
+char1 = sys.argsv[1]
+char1.set(None)
+char2 = sys.argsv[2]
+char2.set(None)
+char3 = sys.argsv[3]
+char3.set(None)
+char4 = sys.argsv[4]
+char4.set(None)
+char5 = sys.argsv[5]
+char5.set(None)
+char6 = sys.argsv[6]
+
+if char6 == "entrepreneur":
+
+	l1=['good_mental_ability','risk_taking_ability','maintaining_human_relations','technical_knowledge','communication_skills','organisation_skills','updated_with_the_latest_trends','knowledge_on_the_subject_matter','power_of_persuation']
+
+	passion=['technical','media influencer']
+
+	l2=[]
+	for x in range(0,len(l1)):
+		l2.append(0)
+
+	# TESTING DATA df -------------------------------------------------------------------------------------
+	df=pd.read_csv("trainent1.csv")
+
+	df.replace({'characteristics':{'technical':0,'media influencer':1}},inplace=True)
+	
+	# print(df.head())
+	
+	X= df[l1]
+
+	y = df[["characteristics"]]
+	np.ravel(y)
+	# print(y)
+
+	# TRAINING DATA tr --------------------------------------------------------------------------------
+	tr=pd.read_csv("testentcsv.csv")
+	tr.replace({'characteristics':{'technical':0,'media influencer':1}},inplace=True)
+
+	X_test= tr[l1]
+	y_test = tr[["characteristics"]]
+	np.ravel(y_test)
+	# ------------------------------------------------------------------------------------------------------
+
+	def DecisionTree():
+		from sklearn import tree
+
+		clf3 = tree.DecisionTreeClassifier()   # empty model of the decision tree
+		clf3 = clf3.fit(X,y)
+
+		# calculating accuracy-------------------------------------------------------------------
+		from sklearn.metrics import accuracy_score
+		y_pred=clf3.predict(X_test)
+		print(accuracy_score(y_test, y_pred))
+		print(accuracy_score(y_test, y_pred,normalize=False))
+		# -----------------------------------------------------
+
+                
+                
+		pchar = [char1.get(),char2.get(),char3.get(),char4.get(),char5.get()]
+
+		for k in range(0,len(l1)):
+		# print (k,)
+			for z in pchar:
+				if(z==l1[k]):
+					l2[k]=1
+
+			inputtest = [l2]
+		predict = clf3.predict(inputtest)
+		predicted=predict[0]
+
+		h='no'
+		for a in range(0,len(passion)):
+			if(predicted == a):
+				h='yes'
+			break
+
+
+		if (h=='yes'):
+			print(passion[a])
+		else:
+			print("Not Found")
+
+
+	def randomforest():
+	from sklearn.ensemble import RandomForestClassifier
+	clf4 = RandomForestClassifier()
+	clf4 = clf4.fit(X,np.ravel(y))
+                
+	# calculating accuracy-------------------------------------------------------------------
+	from sklearn.metrics import accuracy_score
+                
+	y_pred=clf4.predict(X_test)
+	print(accuracy_score(y_test, y_pred))
+	print(accuracy_score(y_test, y_pred,normalize=False))
+	# -----------------------------------------------------
+
+	ppassion = [char1.get(),char2.get(),char3.get(),char4.get(),char5.get()]
+
+	for k in range(0,len(l1)):
+		for z in ppassion:
+			if(z==l1[k]):
+				l2[k]=1
+
+			inputtest = [l2]
+	predict = clf4.predict(inputtest)
+	predicted=predict[0]
+	h='no'
+	for a in range(0,len(passion)):
+		if(predicted == a):
+			h='yes'
+			 break
+		if (h=='yes'):
+		print(passion[a])
+		else:
+		print("Not Found")
+
+
+	def NaiveBayes():
+		from sklearn.naive_bayes import GaussianNB
+		gnb = GaussianNB()
+		gnb=gnb.fit(X,np.ravel(y))
+		np.nan_to_num(X)
+		# calculating accuracy-------------------------------------------------------------------
+		from sklearn.metrics import accuracy_score
+		 y_pred=gnb.predict(X_test)
+	print(accuracy_score(y_test, y_pred))
+	print(accuracy_score(y_test, y_pred,normalize=False))
+	# -----------------------------------------------------
+
+	pchar = [char1.get(),char2.get(),char3.get(),char4.get(),char5.get()]
+	for k in range(0,len(l1)):
+		for z in pchar:
+			if(z==l1[k]):
+				l2[k]=1
+
+	inputtest = [l2]
+	predict = gnb.predict(inputtest)
+	predicted=predict[0]
+
+	h='no'
+	for a in range(0,len(passion)):
+		if(predicted == a):
+			h='yes'
+			break
+	if (h=='yes'):
+		print(passion[a])
+	else:
+                               
+		print("Not Found")
+
+
+
+if char6 == "healthscience" :
+
+	l1=['science_and_math_skills','ability_to_multitask','ability_to_prioritise','good_memory','management_skills','communication_skills','analytical_mind','accurately_interpret_prescriptions','listening_and_observational_skills','compassionate_and_caring','positive_and_optimistic','open_minded','logical_reasoning','alert_in_making_analytical_connections','humble','being_calm_and_unruffle_during_crisis','technical_skills','medical_skills','good_stamina_and_flexibility']
+
+	passion=['pharmacist','psychiatrist','radiology technician']
+
+	l2=[]
+	for x in range(0,len(l1)):
+		l2.append(0)
+	# TESTING DATA df -------------------------------------------------------------------------------------
+	df=pd.read_csv("HStrain1.csv")
+
+	df.replace({'characteristics':{'pharmacist':0,'psychiatrist':1,'radiology technician':2}},inplace=True)
+
+	# print(df.head())
+
+	X= df[l1]
+
+	y = df[["characteristics"]]
+	np.ravel(y)
+	# print(y)
+
+	# TRAINING DATA tr --------------------------------------------------------------------------------
+	tr=pd.read_csv("HStest11.csv")
+	tr.replace({'characteristics':{'pharmacist':0,'psychiatrist':1,'radiology technician':2}},inplace=True)
+
+	X_test= tr[l1]
+	y_test = tr[["characteristics"]]
+	np.ravel(y_test)
+	# ------------------------------------------------------------------------------------------------------
+
+	def DecisionTree():
+
+		from sklearn import tree
+		clf3 = tree.DecisionTreeClassifier()   # empty model of the decision tree
+		clf3 = clf3.fit(X,y)
+
+		# calculating accuracy-------------------------------------------------------------------
+		from sklearn.metrics import accuracy_score
+		y_pred=clf3.predict(X_test)
+		print(accuracy_score(y_test, y_pred))
+ 		print(accuracy_score(y_test, y_pred,normalize=False))
+		 # -----------------------------------------------------
+
+                 
+                 
+	pchar = [char1.get(),char2.get(),char3.get(),char4.get(),char5.get()]
+	for k in range(0,len(l1)):
+	# print (k,)
+	for z in pchar:
+		if(z==l1[k]):
+			l2[k]=1
+
+	inputtest = [l2]
+	predict = clf3.predict(inputtest)
+	predicted=predict[0]
+
+	h='no'
+	for a in range(0,len(passion)):
+		if(predicted == a)
+			h='yes'
+			break
+
+
+		if (h=='yes'):
+			print(passion[a])
+		else:
+			print("Not Found")
+
+
+	def randomforest():
+	from sklearn.ensemble import RandomForestClassifier
+	clf4 = RandomForestClassifier()
+	clf4 = clf4.fit(X,np.ravel(y))
+                 
+	# calculating accuracy-------------------------------------------------------------------
+	from sklearn.metrics import accuracy_score
+                 
+	y_pred=clf4.predict(X_test)
+	print(accuracy_score(y_test, y_pred))
+	print(accuracy_score(y_test, y_pred,normalize=False))
+                 # -----------------------------------------------------
+
+	ppassion = [char1.get(),char2.get(),char3.get(),char4.get(),char5.get()]
+
+	for k in range(0,len(l1)):
+		for z in ppassion:
+			if(z==l1[k]):
+				l2[k]=1
+
+	inputtest = [l2]
+	predict = clf4.predict(inputtest)
+	predicted=predict[0]
+
+	h='no'
+	for a in range(0,len(passion)):
+		if(predicted == a):
+			h='yes'
+			break
+
+	if (h=='yes'):
+		print(passion[a])
+	else:
+		print("Not Found")
+
+
+	def NaiveBayes():
+	from sklearn.naive_bayes import GaussianNB
+	gnb = GaussianNB()
+	gnb=gnb.fit(X,np.ravel(y))
+	np.nan_to_num(X)
+	# calculating accuracy-------------------------------------------------------------------
+	from sklearn.metrics import accuracy_score
+	y_pred=gnb.predict(X_test)
+	print(accuracy_score(y_test, y_pred))
+	print(accuracy_score(y_test, y_pred,normalize=False))
+	# -----------------------------------------------------
+
+	pchar = [char1.get(),char2.get(),char3.get(),char4.get(),char5.get()]
+	for k in range(0,len(l1)):
+		for z in pchar:
+			if(z==l1[k]):
+				l2[k]=1
+	inputtest = [l2]
+	predict = gnb.predict(inputtest)
+	predicted=predict[0]
+
+	h='no'
+	for a in range(0,len(passion)):
+		if(predicted == a):
+			h='yes'
+			break
+
+	if (h=='yes'):
+		print(passion)
+	else:
+		print("Not Found")
+
+if char6 == "education" :
+
+	#1 tab
+	l1=['love_being_around_children','deep_knowledge_on_the_particular_subject','caring_relationship_towards_students','organization_skills','oral_skills','positive_change_in_the_society','patience','sharing_information','phylosophical','wide_range_of_interests','research_oriented','problem_solving','rapport_bulding_ability','flexibility','empathy','good_listener','leadership_qualities','communication_skills','planning_skills','learning_trends','lifelong_learning','multimedia_presentation','interactive','strategic_thinking']
+
+	passion=['teacher','counselor','training specialist']     	
+	l2=[]
+	for x in range(0,len(l1)):
+		l2.append(0)
+
+	# TESTING DATA df -------------------------------------------------------------------------------------
+	df=pd.read_csv("trainchar1.csv")
+
+	df.replace({'characters':{'teacher':0,'counselor':1,'training specialist':2}},inplace=True)
+
+	# print(df.head())
+
+	X= df[l1]
+
+	y = df[["characters"]]
+	np.ravel(y)
+	# print(y)
+
+	# TRAINING DATA tr --------------------------------------------------------------------------------
+	tr=pd.read_csv("testchar.csv")
+	tr.replace({'characters':{'teacher':0,'counselor':1,'training specialist':2}},inplace=True)
+
+	X_test= tr[l1]
+	y_test = tr[["characters"]]
+	np.ravel(y_test)
+	# ------------------------------------------------------------------------------------------------------
+
+	def DecisionTree():
+
+		from sklearn import tree
+
+		clf3 = tree.DecisionTreeClassifier()   # empty model of the decision tree
+		clf3 = clf3.fit(X,y)
+		# calculating accuracy-------------------------------------------------------------------
+ 		from sklearn.metrics import accuracy_score
+		 y_pred=clf3.predict(X_test)
+		print(accuracy_score(y_test, y_pred))
+		print(accuracy_score(y_test, y_pred,normalize=False))
+		# ----------------------------------------------------
+	pchar = [char1.get(),char2.get(),char3.get(),char4.get(),char5.get()]
+
+	for k in range(0,len(l1)):
+		 # print (k,)
+		for z in pchar:
+			if(z==l1[k]):
+				l2[k]=1
+
+	inputtest = [l2]
+	predict = clf3.predict(inputtest)
+	predicted=predict[0]
+
+	h='no'
+	for a in range(0,len(passion)):
+		if(predicted == a):
+			h='yes'
+			break
+
+
+ 	if (h=='yes'):
+		print(passion[a])
+	 else:
+		print("Not Found")
+
+	def randomforest():
+		from sklearn.ensemble import RandomForestClassifier
+		clf4 = RandomForestClassifier()
+		clf4 = clf4.fit(X,np.ravel(y))
+
+		# calculating accuracy-------------------------------------------------------------------
+		from sklearn.metrics import accuracy_score
+                
+		 y_pred=clf4.predict(X_test)
+		 print(accuracy_score(y_test, y_pred))
+		print(accuracy_score(y_test, y_pred,normalize=False))
+		# -----------------------------------------------------
+
+	ppassion = [char1.get(),char2.get(),char3.get(),char4.get(),char5.get()]
+
+	for k in range(0,len(l1)):
+ 		for z in ppassion:
+			if(z==l1[k]):
+				l2[k]=1
+
+	inputtest = [l2]
+	predict = clf4.predict(inputtest)
+	predicted=predict[0]
+
+	h='no'
+	for a in range(0,len(passion)):
+		if(predicted == a):
+			h='yes'
+			break
+		if (h=='yes'):
+			print(passion[a])
+		 else:
+			print("Not Found")
+
+
+	def NaiveBayes():
+	from sklearn.naive_bayes import GaussianNB
+	gnb = GaussianNB()
+	gnb=gnb.fit(X,np.ravel(y))
+
+ 	# calculating accuracy-------------------------------------------------------------------
+	 from sklearn.metrics import accuracy_score
+	y_pred=gnb.predict(X_test)
+	print(accuracy_score(y_test, y_pred))
+	print(accuracy_score(y_test, y_pred,normalize=False))
+	# -----------------------------------------------------
+
+ 	pchar = [char1.get(),char2.get(),char3.get(),char4.get(),char5.get()]
+	for k in range(0,len(l1)):
+		for z in pchar:
+			 if(z==l1[k]):
+				l2[k]=1
+
+ 	inputtest = [l2]
+	predict = gnb.predict(inputtest)
+	predicted=predict[0]
+
+	h='no'
+	for a in range(0,len(passion)):
+		 if(predicted == a):
+ 			h='yes'
+			break
+
+ 		if (h=='yes'):
+			print(passion[a])
+		else:
+			print("Not Found")
