@@ -1,0 +1,44 @@
+package com.example.srm1;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+
+public class ProfileActivity extends AppCompatActivity implements View.OnClickListener {
+    RadioGroup radioGroup3;
+    RadioButton radioButton;
+   // String radiopassion;
+    Button b1,b2;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_profile);
+        b1=findViewById(R.id.yes);
+        b2=findViewById(R.id.no);
+        b1.setOnClickListener(this);
+        b2.setOnClickListener(this);
+
+
+    }
+
+
+    @Override
+    public void onClick(View v) {
+        if(v==b1){
+            startActivity(new Intent(this, passion.class));
+
+        }
+        if(v==b2){
+            startActivity(new Intent(this, predictor.class));
+
+        }
+
+    }
+}

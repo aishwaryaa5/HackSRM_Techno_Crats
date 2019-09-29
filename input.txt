@@ -1,0 +1,53 @@
+package com.example.srm1;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+public class input extends AppCompatActivity implements View.OnClickListener {
+    EditText name,loc,sdesc,desc,root;
+    DatabaseReference reff,reff1;
+    Button button;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_input);
+        root=findViewById(R.id.inputrootname);
+        name=findViewById(R.id.inputname);
+        loc=findViewById(R.id.inputlocation);
+        sdesc=findViewById(R.id.inputshortdescription);
+        desc=findViewById(R.id.inputdescription);
+        button=findViewById(R.id.publish);
+        button.setOnClickListener(this);
+
+
+
+
+    }
+
+    @Override
+    public void onClick(View v) {
+        if(v == button){
+            String nam=name.getText().toString();
+            String loca=loc.getText().toString();
+            String sd=sdesc.getText().toString();
+            String d=desc.getText().toString();
+            String rootname=root.getText().toString();
+            reff= FirebaseDatabase.getInstance().getReference("main").child("passion").child(rootname).child(nam);
+            reff.child("name").setValue(nam);
+            reff.child("description").setValue(d);
+            reff.child("location").setValue(loca);
+            reff.child("short_description").setValue(sd);
+
+        }
+
+
+    }
+}

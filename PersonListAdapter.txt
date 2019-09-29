@@ -1,0 +1,75 @@
+package com.example.srm1;
+
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.ArrayList;
+
+import static android.content.Context.MODE_PRIVATE;
+
+
+public class Personlistadapter extends ArrayAdapter<pascuslist> {
+    final String SharedPreffs= "SharedPreffs";
+    Task<Void> refff;
+
+
+    private Context mContext;
+    int mResource;
+    static class ViewHolder{
+        TextView name;
+        TextView votes;
+        TextView short_description;
+
+    }
+    public Personlistadapter(@NonNull Context context, int resource, @NonNull ArrayList<pascuslist> objects) {
+        super(context, resource, objects);
+        mContext=context;
+        mResource=resource;
+    }
+
+    @NonNull
+    @Override
+    public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+
+        String name=getItem(position).getName();
+        String votes=getItem(position).getVotes();
+        String short_description=getItem(position).getShort_description();
+        final pascuslist pascuslist=new pascuslist(name,votes,short_description);
+        LayoutInflater inflater=LayoutInflater.from(mContext);
+        convertView=inflater.inflate(mResource,parent,false);
+
+        TextView tvname= convertView.findViewById(R.id.text1);
+        TextView tvvotes= convertView.findViewById(R.id.text2);
+        TextView tvshort_description= convertView.findViewById(R.id.text3);
+        tvname.setText(name);
+        tvvotes.setText(votes);
+        tvshort_description.setText(short_description);
+
+        convertView.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                new AlertDialog.Builder(mContext).setTitle(pascuslist.getName()).show();
+                refff= FirebaseDatabase.getInstance().getReference("main").child("request").setValue(pascuslist.getName());
+            }
+        });
+
+       return convertView;
+
+    }
+
+}

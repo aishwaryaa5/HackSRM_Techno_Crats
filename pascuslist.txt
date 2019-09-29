@@ -1,0 +1,42 @@
+package com.example.srm1;
+
+public class pascuslist {
+    private String name;
+    private String votes;
+    private String short_description;
+    public pascuslist() {}
+
+    public pascuslist(String name,String votes,String short_description){
+        this.name = name;
+        this.votes = votes;
+        this.short_description = short_description;
+    }
+
+    public String getName() {
+
+        return name;
+    }
+
+    public String getVotes()
+    {
+        return votes;
+    }
+
+    public String getShort_description() {
+        return short_description;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setVotes(String votes) {
+        this.votes = votes;
+    }
+
+    public void setShort_description(String short_description) {
+        this.short_description = short_description;
+    }
+
+
+}

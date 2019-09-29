@@ -1,0 +1,32 @@
+package com.example.srm1;
+
+public class comments {
+    private String by;
+    private String commentdesc;
+    public comments() {}
+
+    public comments(String by, String commentdesc){
+        this.by = by;
+        this.commentdesc = commentdesc;
+    }
+
+    public String getBy() {
+        return by;
+    }
+
+    public String getCommentdesc() {
+        return commentdesc;
+    }
+
+
+    public void setBy(String by) {
+        this.by = by;
+    }
+
+    public void setCommentdesc(String commentdesc) {
+        this.commentdesc = commentdesc;
+    }
+
+
+
+}

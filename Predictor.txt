@@ -1,0 +1,51 @@
+package com.example.srm1;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+
+import com.google.firebase.auth.FirebaseAuth;
+
+public class predictor extends AppCompatActivity implements View.OnClickListener {
+    FirebaseAuth firebaseAuth;
+Button logoutpre,edu,entre,health;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        firebaseAuth=FirebaseAuth.getInstance();
+        setContentView(R.layout.activity_predictor);
+        logoutpre=findViewById(R.id.logoutpredictor);
+        edu=findViewById(R.id.education);
+        entre=findViewById(R.id.entrepreneurship);
+        health=findViewById(R.id.health);
+        logoutpre.setOnClickListener(this);
+        edu.setOnClickListener(this);
+        entre.setOnClickListener(this);
+        health.setOnClickListener(this);
+
+
+
+    }
+
+    @Override
+    public void onClick(View v) {
+        if(v==logoutpre){
+            firebaseAuth.signOut();
+            finish();
+            startActivity(new Intent(this, LoginActivity.class));
+        }
+        if(v==edu){
+            startActivity(new Intent(this, education.class));
+        }
+        if(v==entre){
+            startActivity(new Intent(this, entrepreneurship.class));
+        }
+        if(v==health){
+            startActivity(new Intent(this, healthscience.class));
+        }
+    }
+}

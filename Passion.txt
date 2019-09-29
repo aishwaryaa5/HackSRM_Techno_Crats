@@ -1,0 +1,95 @@
+package com.example.srm1;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ListView;
+import android.widget.Toast;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class passion extends AppCompatActivity implements View.OnClickListener {
+    ListView listView;
+FirebaseAuth firebaseAuth;
+Button blogoutpasssion;
+DatabaseReference reff;
+EditText editText;
+public static final String SharedPreffs= "SharedPreffs";
+    List<String> abd=new ArrayList<>();
+
+
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_passion);
+       final ArrayAdapter<String> items=new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,abd);
+        firebaseAuth=FirebaseAuth.getInstance();
+        blogoutpasssion=findViewById(R.id.logoutpassion);
+        listView=findViewById(R.id.listpassion);
+        editText=findViewById(R.id.editsearch);
+        blogoutpasssion.setOnClickListener(this);
+
+        reff= FirebaseDatabase.getInstance().getReference().child("main").child("passion");
+        reff.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+               abd.clear();
+                listView.setAdapter(items);
+                for(DataSnapshot d:dataSnapshot.getChildren()){
+                    abd.add(d.getKey());
+                }
+                listView.setAdapter(items);
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Toast.makeText(passion.this, abd.get(position), Toast.LENGTH_SHORT).show();
+                SharedPreferences sharedPreferences = getSharedPreferences(SharedPreffs, MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putString("Passion_Selected", abd.get(position));
+                editor.apply();
+                startActivity(new Intent(getApplicationContext(), cupaslist.class));
+            }
+        });
+
+
+
+    }
+
+    @Override
+    public void onClick(View v) {
+        if(v == blogoutpasssion){
+            firebaseAuth.signOut();
+            finish();
+            startActivity(new Intent(this, LoginActivity.class));
+        }
+    }
+
+
+
+}

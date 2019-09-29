@@ -1,0 +1,61 @@
+package com.example.srm1;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
+import android.widget.Toast;
+
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.FirebaseDatabase;
+
+public class education extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+    Task<Void> reff21,reff22;
+    int n=0;
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_education);
+
+        Spinner spinner1 = findViewById(R.id.spinneredu1);
+        Spinner spinner2 = findViewById(R.id.spinneredu2);
+        Spinner spinner3 = findViewById(R.id.spinneredu3);
+        Spinner spinner4 = findViewById(R.id.spinneredu4);
+        Spinner spinner5 = findViewById(R.id.spinneredu5);
+        ArrayAdapter<CharSequence> adapt = ArrayAdapter.createFromResource(this, R.array.char2, android.R.layout.simple_spinner_item);
+        adapt.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
+        spinner1.setAdapter(adapt);
+        spinner2.setAdapter(adapt);
+        spinner3.setAdapter(adapt);
+        spinner4.setAdapter(adapt);
+        spinner5.setAdapter(adapt);
+
+        spinner1.setOnItemSelectedListener(this);
+        spinner2.setOnItemSelectedListener(this);
+        spinner3.setOnItemSelectedListener(this);
+        spinner4.setOnItemSelectedListener(this);
+        spinner5.setOnItemSelectedListener(this);
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        String text = parent.getItemAtPosition(position).toString();
+        Toast.makeText(parent.getContext(),text,Toast.LENGTH_SHORT).show();
+        String aa="val";
+
+        reff22= FirebaseDatabase.getInstance().getReference("main").child("predictioninput").child("field").setValue("education");
+        reff21= FirebaseDatabase.getInstance().getReference("main").child("predictioninput").child(aa+n).setValue(text);
+        n++;
+        if(n==5){
+            n=0;
+        }
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
+    }
+}
