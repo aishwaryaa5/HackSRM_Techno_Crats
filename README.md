@@ -4,5 +4,7 @@ We will be developing an application where background knowledge, interests and p
 Job offers, internships, events and other opportunities are suggested for the chosen passion which gives the user a clear view and also gives an opportunity to take up the particular job, degree/course or obtain information and monetize the passion through the application.
 
 
+
+
 We have technical issues because of which we cannot push the codes from Android Studio.
 Hence, we will be pushing the codes in Notepads in terms of classes.
